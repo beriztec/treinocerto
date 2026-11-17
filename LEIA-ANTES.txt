@@ -1,0 +1,9 @@
+MODELO COMPLETO — SÓ PARA VISUALIZAÇÃO LOCAL
+
+Esta pasta é uma cópia da VSL com avaliações e antes/depois de exemplo já embutidos,
+para ver a página 100% completa. Abra index.html.
+
+NÃO suba esta pasta no GitHub/Pages nem use em anúncios: as avaliações e as fotos
+não são de alunas reais. A pasta oficial para publicar é ../treino-certo-vsl/
+(lá, as avaliações entram em js/depoimentos.js e o antes/depois em js/config.js,
+quando forem reais e autorizados).

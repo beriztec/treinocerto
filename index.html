@@ -29,11 +29,23 @@
       <section class="hero dark" id="topo">
         <div class="wrap">
           <img src="assets/logo-192.png" alt="Treino Certo" width="48" height="48" class="logo" />
-          <h1 class="h1">Você treina, se dedica… <span class="h1-break">e o glúteo <span class="hl">não responde?</span></span></h1>
+          <h1 class="h1">Você treina, se dedica… <span class="h1-break">e o <span class="kw">glúteo</span> <span class="hl">não responde?</span></span></h1>
+          <!-- AVALIAÇÕES (carrossel) — aparece quando houver avaliações REAIS e AUTORIZADAS em js/depoimentos.js -->
+          <div class="hero-reviews" id="depoimentos" hidden>
+            <p class="hero-reviews-title">Avaliações de quem já treina com o método</p>
+            <div class="carousel">
+              <button type="button" class="car-btn car-prev" aria-label="Avaliações anteriores">‹</button>
+              <div class="car-track" tabindex="0" aria-label="Avaliações de alunas" role="region"></div>
+              <button type="button" class="car-btn car-next" aria-label="Próximas avaliações">›</button>
+            </div>
+            <div class="car-dots" aria-hidden="true"></div>
+          </div>
+
           <p class="sub">
             Assista à apresentação e descubra por que o problema quase nunca é falta de esforço — e como treinar
             <strong>do jeito certo</strong>, com cada exercício mostrado quadro a quadro no seu celular.
           </p>
+
 
           <div class="vsl" id="vsl"></div>
 
@@ -58,6 +70,21 @@
       <!-- ═════════ PRIMEIRO SCROLL: A DIFERENÇA + CONFIANÇA ═════════ -->
       <section class="sec-diff dark" id="diferenca">
         <div class="wrap">
+          <!-- ANTES × DEPOIS (arraste a barra) — imagens definidas em js/config.js → antesDepois -->
+          <div class="ba" id="antes-depois" hidden>
+            <p class="eyebrow center">Arraste e compare</p>
+            <h3 class="ba-title">Antes <span>×</span> Depois</h3>
+            <div class="ba-frame" style="--pos: 50%">
+              <img class="ba-img ba-depois" alt="Depois" draggable="false" />
+              <div class="ba-clip"><img class="ba-img ba-antes" alt="Antes" draggable="false" /></div>
+              <span class="ba-tag ba-tag-antes">ANTES</span>
+              <span class="ba-tag ba-tag-depois">DEPOIS</span>
+              <div class="ba-handle" aria-hidden="true"><i>‹ ›</i></div>
+              <input class="ba-range" type="range" min="0" max="100" value="50" aria-label="Arraste para comparar antes e depois" />
+            </div>
+            <p class="ba-caption"></p>
+          </div>
+
           <p class="eyebrow center">Veja a diferença</p>
           <h2 class="h2 center">O mesmo esforço. <span class="hl">O resultado no lugar certo.</span></h2>
           <div class="versus">
@@ -105,22 +132,10 @@
           <div class="center diff-cta">
             <a class="cta cta-lg" data-cta="checkout" href="#oferta">Aproveitar Oferta</a>
           </div>
+
         </div>
       </section>
 
-      <!-- ═════════ DEPOIMENTOS (carrossel — aparece quando houver depoimentos REAIS em js/depoimentos.js) ═════════ -->
-      <section class="sec light soft" id="depoimentos" hidden>
-        <div class="wrap">
-          <p class="eyebrow center">Quem já treina com o método</p>
-          <h2 class="h2 center">O que as alunas estão dizendo</h2>
-          <div class="carousel">
-            <button type="button" class="car-btn car-prev" aria-label="Depoimentos anteriores">‹</button>
-            <div class="car-track" tabindex="0" aria-label="Depoimentos de alunas" role="region"></div>
-            <button type="button" class="car-btn car-next" aria-label="Próximos depoimentos">›</button>
-          </div>
-          <div class="car-dots" aria-hidden="true"></div>
-        </div>
-      </section>
 
       <!-- ═════════ TRANSFORMAÇÃO (animação do glúteo) ═════════ -->
       <section class="sec light" id="transformacao">
@@ -218,7 +233,7 @@
       <section class="sec dark glow" id="previa">
         <div class="wrap split">
           <div>
-            <p class="eyebrow">Prévia real da plataforma</p>
+            <p class="eyebrow">Por dentro da plataforma</p>
             <h2 class="h2">Veja por dentro do Treino Certo — e teste agora mesmo</h2>
             <p class="lead">Nada de PDF genérico. É uma plataforma feita para usar no celular, no meio do treino: você vê a execução, segue o programa do dia e registra cada série.</p>
             <ul class="checks">
@@ -232,7 +247,7 @@
           </div>
 
           <div class="phone-wrap">
-            <div class="phone-tabs" role="tablist" aria-label="Prévia da plataforma">
+            <div class="phone-tabs" role="tablist" aria-label="Telas da plataforma">
               <button type="button" role="tab" data-tab="tutorial" aria-selected="true">Tutorial</button>
               <button type="button" role="tab" data-tab="treino" aria-selected="false">Modo treino</button>
               <button type="button" role="tab" data-tab="biblioteca" aria-selected="false">Biblioteca</button>

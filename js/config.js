@@ -41,6 +41,16 @@ window.TC_CONFIG = {
      Vazio = mostra a VSL animada com a personagem do Treino Certo. */
   videoUrl: '',
 
+  /* ANTES × DEPOIS (moldura com barra de arrastar, logo abaixo do 1º "Aproveitar Oferta").
+     Coloque as 2 fotos na pasta assets/ (mesmo enquadramento e tamanho, de preferência na vertical 4:5)
+     e escreva o caminho abaixo. Vazio = o bloco fica escondido.
+     Use só fotos REAIS de aluna, com autorização de uso de imagem por escrito. */
+  antesDepois: {
+    antes: 'assets/antes-depois/antes.jpg',
+    depois: 'assets/antes-depois/depois.jpg',
+    legenda: 'Resultados variam de pessoa para pessoa.',
+  },
+
   legal: {
     company: 'Treino Certo',
     document: '', // CNPJ/CPF

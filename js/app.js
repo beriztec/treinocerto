@@ -360,7 +360,30 @@
   function initTestimonials() {
     var list = window.TC_DEPOIMENTOS || [];
     var sec = $('#depoimentos');
-    if (!sec || !list.length) return;
+    if (!sec) return;
+    // VISUALIZAÇÃO LOCAL (só no computador): ?visualizar=1 carrega exemplos de uma pasta FORA do projeto publicado.
+    // No GitHub esse arquivo não existe, então nada aparece.
+    if (!list.length && /[?&]visualizar=1/.test(location.search)) {
+      var base = '../previa-depoimentos/';
+      var s = document.createElement('script');
+      s.src = base + 'depoimentos-previa.js';
+      s.onload = function () {
+        var prev = (window.TC_DEPOIMENTOS_PREVIA || []).map(function (d) {
+          var c = {};
+          for (var k in d) c[k] = d[k];
+          if (c.foto) c.foto = base + c.foto;
+          return c;
+        });
+        if (prev.length) renderTestimonials(sec, prev);
+      };
+      document.head.appendChild(s);
+      return;
+    }
+    if (!list.length) return;
+    renderTestimonials(sec, list);
+  }
+
+  function renderTestimonials(sec, list) {
     var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
     var star = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"/></svg>';
     var track = $('.car-track', sec);
@@ -368,9 +391,9 @@
       var n = Math.max(0, Math.min(5, Number(d.estrelas) || 0));
       return (
         '<figure class="testi">' +
+        (d.foto ? '<img src="' + esc(d.foto) + '" alt="Foto enviada por ' + esc(d.nome) + '" loading="lazy" decoding="async">' : '') +
         (n ? '<div class="testi-stars" aria-label="' + n + ' de 5 estrelas">' + new Array(n + 1).join(star) + '</div>' : '') +
         (d.texto ? '<blockquote>“' + esc(d.texto) + '”</blockquote>' : '') +
-        (d.foto ? '<img src="' + esc(d.foto) + '" alt="Depoimento de ' + esc(d.nome) + '" loading="lazy" decoding="async">' : '') +
         '<figcaption><span class="testi-avatar" aria-hidden="true">' + esc(String(d.nome || '?').charAt(0)) + '</span>' +
         '<span><b>' + esc(d.nome) + '</b>' + (d.detalhe ? '<small>' + esc(d.detalhe) + '</small>' : '') + '</span></figcaption>' +
         '</figure>'
@@ -437,6 +460,69 @@
     }
   }
 
+  /* ═════════ ANTES × DEPOIS (arrastar a barra) ═════════ */
+  function placeholderImg(label, c1, c2) {
+    var svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500"><defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + c1 + '"/><stop offset="1" stop-color="' + c2 + '"/></linearGradient></defs><rect width="400" height="500" fill="url(#g)"/><text x="200" y="240" text-anchor="middle" font-family="Arial" font-weight="700" font-size="34" fill="#fff" opacity=".9">' + label + '</text><text x="200" y="280" text-anchor="middle" font-family="Arial" font-size="16" fill="#fff" opacity=".7">(sua imagem aqui)</text></svg>';
+    return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+  }
+  function initBeforeAfter() {
+    var box = document.getElementById('antes-depois');
+    if (!box) return;
+    var ad = (window.TC_CONFIG && TC_CONFIG.antesDepois) || {};
+    var antes = ad.antes, depois = ad.depois, legenda = ad.legenda, previa = false;
+    if (!(antes && depois)) {
+      // VISUALIZAÇÃO LOCAL (?visualizar=1): usa as imagens da pasta FORA do projeto publicado
+      // (../previa-depoimentos/antes-depois/); se não existirem, mostra imagens de exemplo.
+      if (!/[?&]visualizar=1/.test(location.search)) return;
+      previa = true;
+      antes = '../previa-depoimentos/antes-depois/antes.jpg';
+      depois = '../previa-depoimentos/antes-depois/depois.jpg';
+      legenda = 'Resultados variam de pessoa para pessoa.';
+    }
+    var frame = box.querySelector('.ba-frame');
+    var range = box.querySelector('.ba-range');
+    var imgA = box.querySelector('.ba-antes');
+    var imgD = box.querySelector('.ba-depois');
+    // a moldura assume o formato da foto (sem cortar demais fotos verticais)
+    imgD.addEventListener('load', function () {
+      var r = imgD.naturalWidth / imgD.naturalHeight;
+      if (!r) return;
+      r = Math.max(r, 0.5);
+      frame.style.aspectRatio = String(r);
+      frame.style.width = 'min(100%, calc(72svh * ' + r + '))';
+    });
+    if (previa) {
+      imgA.onerror = function () { imgA.onerror = null; imgA.src = placeholderImg('ANTES', '#4a2a55', '#2d1236'); };
+      imgD.onerror = function () { imgD.onerror = null; imgD.src = placeholderImg('DEPOIS', '#8a4fc4', '#6d35a2'); };
+    }
+    imgA.src = antes;
+    imgD.src = depois;
+    var cap = box.querySelector('.ba-caption');
+    if (legenda) cap.textContent = legenda; else cap.remove();
+    box.hidden = false;
+    function set(v) {
+      v = Math.max(0, Math.min(100, v));
+      frame.style.setProperty('--pos', v + '%');
+      range.value = v;
+    }
+    range.addEventListener('input', function () { set(+range.value); });
+    // arrastar em qualquer ponto da moldura (dedo ou mouse)
+    var drag = false;
+    function fromEvent(e) {
+      var r = frame.getBoundingClientRect();
+      set(((e.clientX - r.left) / r.width) * 100);
+    }
+    frame.addEventListener('pointerdown', function (e) {
+      drag = true;
+      try { frame.setPointerCapture(e.pointerId); } catch (_) {}
+      fromEvent(e);
+    });
+    frame.addEventListener('pointermove', function (e) { if (drag) fromEvent(e); });
+    ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(function (t) {
+      frame.addEventListener(t, function () { drag = false; });
+    });
+  }
+
   /* ═════════ início ═════════ */
   function init() {
     fillOffer();
@@ -448,6 +534,7 @@
     initVsl();
     initPhone();
     initTestimonials();
+    initBeforeAfter();
     initGlute();
     initSticky();
   }

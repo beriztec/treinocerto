@@ -2087,3 +2087,300 @@ a {
   border-radius: 99px;
   background: var(--violet);
 }
+/* ───────── AVALIAÇÕES NO TOPO (abaixo do subtítulo) ───────── */
+.hero-reviews {
+  max-width: 900px;
+  margin: 0 auto 22px;
+  text-align: left;
+}
+.hero-reviews-title {
+  margin: 0 0 4px;
+  text-align: center;
+  color: var(--lilac);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.hero-reviews .carousel {
+  margin-top: 10px;
+}
+.hero-reviews .testi {
+  padding: 12px 12px 16px;
+  gap: 10px;
+}
+.testi img {
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+.hero-reviews .testi blockquote {
+  font-size: 0.92rem;
+}
+.hero-reviews .car-dots i {
+  background: rgba(212, 165, 242, 0.3);
+}
+.hero-reviews .car-dots i.on {
+  background: var(--lilac);
+}
+/* o card é claro mesmo dentro do topo escuro: texto sempre escuro */
+.testi {
+  color: var(--plum-950);
+}
+
+/* Selo dos cards de prévia (só aparece com ?previa=1, no computador) */
+.testi {
+  position: relative;
+}
+.testi-previa {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  z-index: 1;
+  padding: 4px 10px;
+  border-radius: 99px;
+  background: #ffd84d;
+  color: #1b0820;
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+}
+
+/* ───────── AVALIAÇÕES: foto menor, ao lado do texto ───────── */
+.hero-reviews .testi {
+  grid-template-columns: minmax(96px, 36%) 1fr;
+  column-gap: 14px;
+  row-gap: 6px;
+  align-content: start;
+  align-items: start;
+}
+.hero-reviews .testi img {
+  grid-column: 1;
+  grid-row: 1 / span 3;
+  aspect-ratio: 3 / 4;
+  border-radius: 12px;
+}
+.hero-reviews .testi > :not(img):not(.testi-previa) {
+  grid-column: 2;
+}
+.hero-reviews .testi:not(:has(img)) {
+  grid-template-columns: 1fr;
+}
+.hero-reviews .testi:not(:has(img)) > * {
+  grid-column: 1;
+}
+.hero-reviews .testi-stars svg {
+  width: 15px;
+  height: 15px;
+}
+.hero-reviews .testi blockquote {
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+.hero-reviews .testi figcaption {
+  gap: 8px;
+}
+.hero-reviews .testi-avatar {
+  width: 30px;
+  height: 30px;
+  font-size: 0.8rem;
+}
+.hero-reviews .testi figcaption b {
+  font-size: 0.85rem;
+}
+.hero-reviews .testi-previa {
+  top: 10px;
+  left: 10px;
+  font-size: 0.56rem;
+  padding: 3px 7px;
+}
+@media (max-width: 600px) {
+  .hero-reviews .car-track {
+    grid-auto-columns: 92%;
+  }
+  .hero-reviews .testi {
+    padding: 10px;
+    grid-template-columns: 104px 1fr;
+  }
+}
+
+/* ───────── TÍTULO MAIS FORTE NO CELULAR ───────── */
+@media (max-width: 640px) {
+  .h1 {
+    font-size: clamp(2.25rem, 10.2vw, 2.7rem);
+    line-height: 1;
+    letter-spacing: -0.015em;
+    margin-bottom: 14px;
+    text-shadow:
+      0 2px 0 rgba(27, 8, 32, 0.6),
+      0 6px 34px rgba(109, 53, 162, 0.85);
+  }
+  .h1-break {
+    margin-top: 0.12em;
+  }
+  .h1 .hl {
+    font-size: 1.12em;
+    filter: drop-shadow(0 0 20px rgba(212, 165, 242, 0.55));
+  }
+}
+/* ajuste: largura do card no celular por medida fixa (porcentagem não resolvia bem na trilha que rola) */
+@media (max-width: 600px) {
+  .hero-reviews .car-track {
+    grid-auto-columns: calc(100vw - 64px);
+  }
+}
+/* selo de prévia no rodapé da foto, sem cobrir as estrelas */
+.hero-reviews .testi-previa {
+  top: auto;
+  bottom: 10px;
+}
+/* <figure> tem margem padrão de 40px nas laterais: zera para o card ocupar a coluna toda */
+.testi {
+  margin: 0;
+}
+
+/* ───────── "GLÚTEO" EM DESTAQUE NO TÍTULO ───────── */
+.h1 .kw {
+  display: inline-block;
+  padding: 0.02em 0.22em 0.06em;
+  margin: 0 0.04em;
+  border-radius: 0.18em;
+  background: linear-gradient(135deg, var(--violet), #9b5fd6);
+  color: #fff;
+  transform: rotate(-2deg);
+  box-shadow:
+    0 0 0 2px rgba(212, 165, 242, 0.55),
+    0 8px 26px rgba(109, 53, 162, 0.7);
+  text-shadow: 0 2px 0 rgba(27, 8, 32, 0.35);
+}
+
+/* subtítulo agora fica entre as avaliações e a VSL */
+.hero .sub {
+  margin: 4px auto 18px;
+}
+
+/* ───────── ANTES × DEPOIS (arrastar) ───────── */
+.ba {
+  max-width: 440px;
+  margin: 40px auto 0;
+  text-align: center;
+}
+.ba-title {
+  font: 900 clamp(1.6rem, 6vw, 2.1rem) / 1.1 var(--display);
+  text-transform: uppercase;
+  margin: 0 0 16px;
+}
+.ba-title span {
+  color: var(--lilac);
+}
+.ba-frame {
+  --pos: 50%;
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: 22px;
+  overflow: hidden;
+  background: #2d1236;
+  box-shadow:
+    0 0 0 2px rgba(212, 165, 242, 0.35),
+    0 18px 50px rgba(0, 0, 0, 0.45);
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: ew-resize;
+}
+.ba-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+.ba-clip {
+  position: absolute;
+  inset: 0;
+  clip-path: inset(0 calc(100% - var(--pos)) 0 0);
+}
+.ba-tag {
+  position: absolute;
+  top: 12px;
+  padding: 5px 10px;
+  border-radius: 99px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  background: rgba(27, 8, 32, 0.75);
+  color: #fff;
+  pointer-events: none;
+}
+.ba-tag-antes {
+  left: 12px;
+}
+.ba-tag-depois {
+  right: 12px;
+  background: var(--violet);
+}
+.ba-handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--pos);
+  width: 3px;
+  margin-left: -1.5px;
+  background: #fff;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+}
+.ba-handle i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 46px;
+  height: 46px;
+  margin: -23px 0 0 -23px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--violet);
+  font: 900 1rem/1 var(--display);
+  font-style: normal;
+  letter-spacing: 2px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+.ba-range {
+  position: absolute;
+  inset: auto 0 0;
+  width: 100%;
+  opacity: 0;
+  pointer-events: none;
+}
+.ba-range:focus-visible + * ,
+.ba-frame:has(.ba-range:focus-visible) {
+  outline: 3px solid var(--lilac);
+  outline-offset: 3px;
+}
+.ba-caption {
+  margin: 12px 0 0;
+  font-size: 0.8rem;
+  color: var(--fg-muted);
+}
+/* moldura centralizada quando assume o formato da foto */
+.ba-frame {
+  margin-inline: auto;
+}
+.ba-img {
+  object-position: 50% 40%;
+}
+.ba-caption-previa {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 8px;
+  background: #ffd84d;
+  color: #1b0820;
+  font-weight: 700;
+}
+
+/* antes × depois no início da seção "Veja a diferença" */
+.sec-diff .ba:first-child {
+  margin: 0 auto 56px;
+}
